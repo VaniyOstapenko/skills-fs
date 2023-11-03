@@ -7,6 +7,13 @@ function getAllSkills() {
   return data;
 }
 
+function getSkill(id) {
+  const data = JSON.parse(fs.readFileSync(path));
+  const filtered = data.filter((el) => el.id == id);
+  if (!filtered.length) throw new Error('id is not faund');
+  return filtered;
+}
+
 function createSkill(title) {
   const data = JSON.parse(fs.readFileSync(path));
   const filtered = data.filter(el => el.title == title);
@@ -41,4 +48,4 @@ function deleteSkill(id) {
   return filtered;
 }
 
-module.exports = { getAllSkills, createSkill, updateSkill, deleteSkill };
+module.exports = { getAllSkills, getSkill, createSkill, updateSkill, deleteSkill };

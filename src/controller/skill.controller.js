@@ -1,7 +1,7 @@
 const express = require('express');
 const buildResponse = require('../helper/buildResponse');
 const { isValidSkillId, isValidSkillData } = require('../helper/validation');
-const { getAllSkills, createSkill, updateSkill, deleteSkill } = require('../service/skill.service');
+const { getAllSkills, getSkill, createSkill, updateSkill, deleteSkill } = require('../service/skill.service');
 
 const route = express.Router();
 
@@ -13,6 +13,16 @@ route.get('/', (req, res) => {
         buildResponse(res, 404, error.message);
     }
 });
+
+route.get('/:id', isValidSkillId, (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = getSkill(id);
+        buildResponse(res, 200, data);
+    } catch (error) {
+        buildResponse(res, 400, error.message);
+    }
+})
 
 route.post('/', isValidSkillData, (req, res) => {
     try {
